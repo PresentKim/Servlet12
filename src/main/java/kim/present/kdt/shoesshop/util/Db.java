@@ -55,8 +55,7 @@ public class Db {
     }
 
     public static <T> List<T> executeSelect(String query, ResultSetExtractor<T> extractor) {
-        return executeSelect(query, pstmt -> {
-        }, extractor);
+        return executeSelect(query, defaultStatementPreparer(), extractor);
     }
 
     public static <T> List<T> executeSelect(String query, StatementPreparer preparer, ResultSetExtractor<T> extractor) {
@@ -79,6 +78,10 @@ public class Db {
         return list;
     }
 
+    public static <T> T executeSelectOne(String query, ResultSetExtractor<T> extractor) {
+        return executeSelectOne(query, defaultStatementPreparer(), extractor);
+    }
+
     public static <T> T executeSelectOne(String query, StatementPreparer preparer, ResultSetExtractor<T> extractor) {
         T result = null;
         try {
@@ -97,6 +100,11 @@ public class Db {
         }
 
         return result;
+    }
+
+    public static StatementPreparer defaultStatementPreparer() {
+        return pstmt -> {
+        };
     }
 
     @FunctionalInterface

@@ -14,24 +14,22 @@ public class CartInsertAction implements Action {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        MemberVO mvo = (MemberVO) request.getSession().getAttribute("loginUser");
+        if (mvo == null) {
+            response.sendRedirect("shop.do?command=loginForm");
+            return;
+        }
+
         int pseq = Integer.parseInt(request.getParameter("pseq"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
 
-        MemberVO mvo = (MemberVO) request.getSession().getAttribute("loginUser");
+        CartVO cvo = new CartVO();
+        cvo.setUserid(mvo.getUserid());
+        cvo.setPseq(pseq);
+        cvo.setQuantity(quantity);
 
-        if (mvo == null) {
-            response.sendRedirect("shop.do?command=loginForm");
-        } else {
-            CartDao cdao = CartDao.getInstance();
-            CartVO cvo = new CartVO();
-
-            cvo.setUserid(mvo.getUserid());
-            cvo.setPseq(pseq);
-            cvo.setQuantity(quantity);
-
-            cdao.insertCart(cvo);
-            response.sendRedirect("shop.do?command=cartList");
-        }
+        CartDao.getInstance().insertCart(cvo);
+        response.sendRedirect("shop.do?command=cartList");
     }
 
 }

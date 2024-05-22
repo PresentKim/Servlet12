@@ -14,17 +14,10 @@ public class IdcheckFormAction implements Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userid = request.getParameter("userid");
-        MemberDao mdao = MemberDao.getInstance();
-        MemberVO mvo = mdao.getMember(userid);
-
-        if (mvo == null) {
-            request.setAttribute("result", -1); // 사용가능
-        } else {
-            request.setAttribute("result", 1);  // 사용중
-        }
+        MemberVO mvo = MemberDao.getInstance().getMember(userid);
 
         request.setAttribute("userid", userid);
-
+        request.setAttribute("result", mvo == null ? -1 : 1);
         request.getRequestDispatcher("member/idcheck.jsp").forward(request, response);
     }
 

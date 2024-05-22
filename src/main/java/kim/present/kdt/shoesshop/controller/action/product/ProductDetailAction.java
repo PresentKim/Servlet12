@@ -15,7 +15,6 @@ public class ProductDetailAction implements Action {
         int pseq = Integer.parseInt(request.getParameter("pseq"));
 
         request.setAttribute("productVO", ProductDao.getInstance().getProduct(pseq));
-
         request.getRequestDispatcher("product/productDetail.jsp").forward(request, response);
     }
 

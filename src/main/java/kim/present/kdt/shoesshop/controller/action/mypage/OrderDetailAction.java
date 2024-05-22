@@ -11,7 +11,7 @@ import kim.present.kdt.shoesshop.dto.OrderVO;
 import java.io.IOException;
 import java.util.List;
 
-public class OrderListAction implements Action {
+public class OrderDetailAction implements Action {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -24,22 +24,15 @@ public class OrderListAction implements Action {
         int oseq = Integer.parseInt(request.getParameter("oseq"));
         List<OrderVO> list = OrderDao.getInstance().selectOrderByOseq(oseq);
         request.setAttribute("orderList", list);
+        request.setAttribute("orderDetail", list.get(0));
 
         int totalPrice = 0;
         for (OrderVO ovo : list) {
-            totalPrice += (ovo.getPrice2() * ovo.getQuantity());
+            totalPrice += ovo.getPrice2() * ovo.getQuantity();
         }
 
         request.setAttribute("totalPrice", totalPrice);
-        request.getRequestDispatcher("mypage/orderList.jsp").forward(request, response);
+        request.getRequestDispatcher("mypage/orderDetail.jsp").forward(request, response);
     }
+
 }
-
-
-
-
-
-
-
-
-

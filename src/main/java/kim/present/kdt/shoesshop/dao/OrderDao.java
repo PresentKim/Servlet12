@@ -73,6 +73,19 @@ public class OrderDao {
         );
     }
 
+    public List<Integer> selectOseqOrderIng(String userid) {
+        return executeSelect("SELECT DISTINCT oseq FROM order_view WHERE userid = ? AND result = '1' ORDER BY oseq DESC",
+                pstmt -> pstmt.setString(1, userid),
+                rs -> rs.getInt("oseq")
+        );
+    }
+
+    public List<Integer> selectOseqOrderAll(String userid) {
+        return executeSelect("SELECT DISTINCT oseq FROM order_view WHERE userid = ? ORDER BY oseq DESC",
+                pstmt -> pstmt.setString(1, userid),
+                rs -> rs.getInt("oseq")
+        );
+    }
 }
 
 

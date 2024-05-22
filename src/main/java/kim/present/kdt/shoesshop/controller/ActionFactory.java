@@ -2,6 +2,10 @@ package kim.present.kdt.shoesshop.controller;
 
 import kim.present.kdt.shoesshop.controller.action.Action;
 import kim.present.kdt.shoesshop.controller.action.IndexAction;
+import kim.present.kdt.shoesshop.controller.action.customer.QnaListAction;
+import kim.present.kdt.shoesshop.controller.action.customer.QnaViewAction;
+import kim.present.kdt.shoesshop.controller.action.customer.WriteQnaAction;
+import kim.present.kdt.shoesshop.controller.action.customer.WriteQnaFormAction;
 import kim.present.kdt.shoesshop.controller.action.member.*;
 import kim.present.kdt.shoesshop.controller.action.mypage.*;
 import kim.present.kdt.shoesshop.controller.action.product.CategoryAction;
@@ -78,6 +82,39 @@ public class ActionFactory {
                 break;
             case "orderInsertOne":
                 ac = new OrderInsertOneAction();
+                break;
+
+            case "mypage":
+                ac = new MypageAction();
+                break;
+            case "orderAll":
+                ac = new OrderAllAction();
+                break;
+            case "updateMemberForm":
+                ac = new UpdateMemberFormAction();
+                break;
+            case "updateMember":
+                ac = new UpdateMemberAction();
+                break;
+            case "deleteMember":
+                ac = new DeleteMemberAction();
+                break;
+            case "orderDetail":
+                ac = new OrderDetailAction();
+                break;
+
+            // customer
+            case "qnaList":
+                ac = new QnaListAction();
+                break;
+            case "qnaView":
+                ac = new QnaViewAction();
+                break;
+            case "writeQnaForm":
+                ac = new WriteQnaFormAction();
+                break;
+            case "writeQna":
+                ac = new WriteQnaAction();
                 break;
         }
 

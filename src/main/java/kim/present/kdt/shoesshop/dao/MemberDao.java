@@ -74,6 +74,27 @@ public class MemberDao {
         return avo;
     }
 
+
+    public void updateMember(MemberVO mvo) {
+        executeUpdate("UPDATE member SET pwd = ?, name = ?, zip_num = ?, address1 = ?, address2 = ?, email = ?, phone = ? WHERE userid = ?",
+                pstmt -> {
+                    pstmt.setString(1, mvo.getPwd());
+                    pstmt.setString(2, mvo.getName());
+                    pstmt.setString(3, mvo.getZip_num());
+                    pstmt.setString(4, mvo.getAddress1());
+                    pstmt.setString(5, mvo.getAddress2());
+                    pstmt.setString(6, mvo.getEmail());
+                    pstmt.setString(7, mvo.getPhone());
+                    pstmt.setString(8, mvo.getUserid());
+                }
+        );
+    }
+
+    public void deleteMember(String userid) {
+        executeUpdate("UPDATE member SET useyn = 'N' WHERE userid = ?",
+                pstmt -> pstmt.setString(1, userid)
+        );
+    }
 }
 
 
