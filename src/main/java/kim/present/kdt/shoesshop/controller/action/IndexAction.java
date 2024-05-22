@@ -7,15 +7,15 @@ import kim.present.kdt.shoesshop.dao.ProductDao;
 import kim.present.kdt.shoesshop.dto.ProductVO;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class IndexAction implements Action {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ProductDao pdao = ProductDao.getInstance();
-        ArrayList<ProductVO> blist = pdao.bestList();
-        ArrayList<ProductVO> nlist = pdao.newList();
+        List<ProductVO> blist = pdao.selectBestProduct();
+        List<ProductVO> nlist = pdao.selectNewProduct();
 
         request.setAttribute("newList", nlist);
         request.setAttribute("bestList", blist);

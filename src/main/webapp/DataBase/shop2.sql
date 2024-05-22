@@ -88,7 +88,7 @@ WHERE o.oseq = d.oseq
 
 -- 신상품  View 생성
 CREATE OR REPLACE view new_pro_view AS
-SELECT pseq, name, price2, image
+SELECT pseq, name, price2, image, savefilename
 FROM product
 WHERE useyn = 'Y'
 ORDER BY indate DESC
@@ -96,7 +96,7 @@ LIMIT 4;
 
 -- 베스트 상품 view 생성
 CREATE OR REPLACE view best_pro_view AS
-SELECT pseq, name, price2, image
+SELECT pseq, name, price2, image, savefilename
 FROM product
 WHERE bestyn = 'Y'
 ORDER BY indate DESC

@@ -11,6 +11,7 @@ import kim.present.kdt.shoesshop.dto.OrderVO;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class OrderListAction implements Action {
 
@@ -25,7 +26,7 @@ public class OrderListAction implements Action {
         } else {
             OrderDao odao = OrderDao.getInstance();
             //  order_view 에서 주문번호(oseq)로 주문을 검색하고 request 에 담아서 orderList.jsp 로 이동
-            ArrayList<OrderVO> list = odao.selectOrderByOseq(oseq);
+            List<OrderVO> list = odao.selectOrderByOseq(oseq);
             request.setAttribute("orderList", list);
 
             int totalPrice = 0;

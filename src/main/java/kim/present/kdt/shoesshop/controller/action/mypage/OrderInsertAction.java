@@ -12,6 +12,7 @@ import kim.present.kdt.shoesshop.dto.MemberVO;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class OrderInsertAction implements Action {
 
@@ -25,11 +26,11 @@ public class OrderInsertAction implements Action {
 
             // 1. 장바구니의 물건을 일관주문할때 -> 아이디로 장바구니를 검색
             CartDao cdao = CartDao.getInstance();
-            ArrayList<CartVO> list1 = cdao.selectCart(mvo.getUserid());
+            List<CartVO> list1 = cdao.selectCart(mvo.getUserid());
 
             // 2. 장바구니의 선택한 물건만 주문할때 -> 전송된  cseq 들로 검색
             String[] cseqs = request.getParameterValues("cseq");
-            ArrayList<CartVO> list2 = new ArrayList<CartVO>();
+            List<CartVO> list2 = new ArrayList<CartVO>();
             for (String cseq : cseqs) {
                 CartVO cvo = cdao.getCart(cseq);
                 list2.add(cvo);

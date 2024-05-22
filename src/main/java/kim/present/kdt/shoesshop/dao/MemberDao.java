@@ -2,107 +2,79 @@ package kim.present.kdt.shoesshop.dao;
 
 import kim.present.kdt.shoesshop.dto.AddressVO;
 import kim.present.kdt.shoesshop.dto.MemberVO;
-import kim.present.kdt.shoesshop.util.Db;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
+
+import static kim.present.kdt.shoesshop.util.Db.executeSelect;
+import static kim.present.kdt.shoesshop.util.Db.executeUpdate;
 
 public class MemberDao {
 
     private MemberDao() {
     }
 
-    private static MemberDao itc = new MemberDao();
+    private static final MemberDao instance = new MemberDao();
 
     public static MemberDao getInstance() {
-        return itc;
+        return instance;
     }
-
-    Connection con = null;
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
 
     public MemberVO getMember(String userid) {
-        MemberVO mvo = null;
-        con = Db.getConnection();
-        String sql = "select * from member where userid=?";
-        try {
-            pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, userid);
-            rs = pstmt.executeQuery();
-            if (rs.next()) {
-                mvo = new MemberVO();
-                mvo.setUserid(rs.getString("userid"));
-                mvo.setPwd(rs.getString("pwd"));
-                mvo.setName(rs.getString("name"));
-                mvo.setEmail(rs.getString("email"));
-                mvo.setZip_num(rs.getString("zip_num"));
-                mvo.setAddress1(rs.getString("address1"));
-                mvo.setAddress2(rs.getString("address2"));
-                mvo.setPhone(rs.getString("phone"));
-                mvo.setUseyn(rs.getString("useyn"));
-                mvo.setIndate(rs.getTimestamp("indate"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Db.close(con, pstmt, rs);
-        }
-        return mvo;
+        return executeSelect("SELECT * FROM member WHERE userid = ?",
+                pstmt -> pstmt.setString(1, userid),
+                rs -> {
+                    MemberVO mvo = new MemberVO();
+                    mvo.setUserid(rs.getString("userid"));
+                    mvo.setPwd(rs.getString("pwd"));
+                    mvo.setName(rs.getString("name"));
+                    mvo.setEmail(rs.getString("email"));
+                    mvo.setZip_num(rs.getString("zip_num"));
+                    mvo.setAddress1(rs.getString("address1"));
+                    mvo.setAddress2(rs.getString("address2"));
+                    mvo.setPhone(rs.getString("phone"));
+                    mvo.setUseyn(rs.getString("useyn"));
+                    mvo.setIndate(rs.getTimestamp("indate"));
+                    return mvo;
+                }
+        ).get(0);
     }
 
-    public ArrayList<AddressVO> selectAddressByDong(String dong) {
-        ArrayList<AddressVO> list = new ArrayList<AddressVO>();
-        con = Db.getConnection();
-        String sql = "select * from address where dong like concat('%', ?, '%') ";
-        try {
-            pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, dong);
-            rs = pstmt.executeQuery();
-            while (rs.next()) {
-                AddressVO avo = new AddressVO();
-                avo.setZip_num(rs.getString("zip_num"));
-                avo.setSido(rs.getString("sido"));
-                avo.setGugun(rs.getString("gugun"));
-                avo.setDong(rs.getString("dong"));
-                avo.setZip_code(rs.getString("zip_code"));
-                avo.setBunji(rs.getString("bunji"));
-                list.add(avo);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Db.close(con, pstmt, rs);
-        }
-        return list;
+    public List<AddressVO> selectAddressByDong(String dong) {
+        return executeSelect("SELECT * FROM address WHERE dong LIKE CONCAT('%', ?, '%')",
+                pstmt -> pstmt.setString(1, dong),
+                MemberDao::extractAddressVO
+        );
     }
 
     public int insertMember(MemberVO mvo) {
-        int result = 0;
-        String sql = "insert into member(userid, pwd, name, zip_num, address1, address2, email, phone)  "
-                + " values( ?, ?, ?, ?, ?, ?, ?, ? )";
-        con = Db.getConnection();
-        try {
-            pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, mvo.getUserid());
-            pstmt.setString(2, mvo.getPwd());
-            pstmt.setString(3, mvo.getName());
-            pstmt.setString(4, mvo.getZip_num());
-            pstmt.setString(5, mvo.getAddress1());
-            pstmt.setString(6, mvo.getAddress2());
-            pstmt.setString(7, mvo.getEmail());
-            pstmt.setString(8, mvo.getPhone());
-            result = pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Db.close(con, pstmt, rs);
-        }
-        return result;
+        return executeUpdate("INSERT INTO member (userid, pwd, name, zip_num, address1, address2, email, phone)"
+                        + " VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )",
+                pstmt -> {
+                    pstmt.setString(1, mvo.getUserid());
+                    pstmt.setString(2, mvo.getPwd());
+                    pstmt.setString(3, mvo.getName());
+                    pstmt.setString(4, mvo.getZip_num());
+                    pstmt.setString(5, mvo.getAddress1());
+                    pstmt.setString(6, mvo.getAddress2());
+                    pstmt.setString(7, mvo.getEmail());
+                    pstmt.setString(8, mvo.getPhone());
+                }
+        );
     }
+
+    private static AddressVO extractAddressVO(ResultSet rs) throws SQLException {
+        AddressVO avo = new AddressVO();
+        avo.setZip_num(rs.getString("zip_num"));
+        avo.setSido(rs.getString("sido"));
+        avo.setGugun(rs.getString("gugun"));
+        avo.setDong(rs.getString("dong"));
+        avo.setZip_code(rs.getString("zip_code"));
+        avo.setBunji(rs.getString("bunji"));
+        return avo;
+    }
+
 }
 
 

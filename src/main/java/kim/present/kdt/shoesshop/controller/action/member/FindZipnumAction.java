@@ -9,6 +9,7 @@ import kim.present.kdt.shoesshop.dto.AddressVO;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class FindZipnumAction implements Action {
 
@@ -17,7 +18,7 @@ public class FindZipnumAction implements Action {
         String dong = request.getParameter("dong");
         if (dong != null && !dong.isEmpty()) {
             MemberDao mdao = MemberDao.getInstance();
-            ArrayList<AddressVO> list = mdao.selectAddressByDong(dong);
+            List<AddressVO> list = mdao.selectAddressByDong(dong);
             request.setAttribute("addressList", list);
         }
         request.getRequestDispatcher("member/findZipNum.jsp").forward(request, response);

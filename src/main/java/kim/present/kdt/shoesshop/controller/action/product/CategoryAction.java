@@ -8,7 +8,7 @@ import kim.present.kdt.shoesshop.dao.ProductDao;
 import kim.present.kdt.shoesshop.dto.ProductVO;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryAction implements Action {
 
@@ -17,7 +17,7 @@ public class CategoryAction implements Action {
         String kind = request.getParameter("kind");
 
         ProductDao pdao = ProductDao.getInstance();
-        ArrayList<ProductVO> list = pdao.selectKindProduct(kind);
+        List<ProductVO> list = pdao.selectKindProduct(kind);
 
         String[] kindList = {"", "Heels", "Boots", "Sandals", "Snickers", "Slippers"};
 

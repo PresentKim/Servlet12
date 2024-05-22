@@ -10,7 +10,7 @@ import kim.present.kdt.shoesshop.dto.CartVO;
 import kim.present.kdt.shoesshop.dto.MemberVO;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 public class CartListAction implements Action {
 
@@ -23,7 +23,7 @@ public class CartListAction implements Action {
             response.sendRedirect("shop.do?command=loginForm");
         } else {
             CartDao cdao = CartDao.getInstance();
-            ArrayList<CartVO> list = cdao.selectCart(mvo.getUserid());
+            List<CartVO> list = cdao.selectCart(mvo.getUserid());
 
             int totalPrice = 0;
             for (CartVO cvo : list) {

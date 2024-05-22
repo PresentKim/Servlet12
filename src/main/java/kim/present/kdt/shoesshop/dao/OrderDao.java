@@ -2,124 +2,76 @@ package kim.present.kdt.shoesshop.dao;
 
 import kim.present.kdt.shoesshop.dto.CartVO;
 import kim.present.kdt.shoesshop.dto.OrderVO;
-import kim.present.kdt.shoesshop.util.Db;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
+
+import static kim.present.kdt.shoesshop.util.Db.executeSelect;
+import static kim.present.kdt.shoesshop.util.Db.executeUpdate;
 
 public class OrderDao {
 
     private OrderDao() {
     }
 
-    private static OrderDao itc = new OrderDao();
+    private static final OrderDao instance = new OrderDao();
 
     public static OrderDao getInstance() {
-        return itc;
+        return instance;
     }
 
-    Connection con = null;
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
-
     public void insertOrders(String userid) {
-        String sql = "insert into orders( userid ) values( ? )";
-        con = Db.getConnection();
-        try {
-            pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, userid);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Db.close(con, pstmt, rs);
-        }
+        executeUpdate("INSERT INTO orders (userid) VALUES (?)", pstmt -> pstmt.setString(1, userid));
     }
 
     public int lookupMaxOseq(String userid) {
-        int oseq = 0;
-        con = Db.getConnection();
-        String sql = "select max(oseq) as moseq  from orders where userid=?";
-        try {
-            pstmt = con.prepareStatement(sql);
-            pstmt.setString(1, userid);
-            rs = pstmt.executeQuery();
-            if (rs.next()) oseq = rs.getInt("moseq");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Db.close(con, pstmt, rs);
-        }
-        return oseq;
+        return executeSelect("SELECT MAX(oseq) AS moseq FROM orders WHERE userid = ?",
+                pstmt -> pstmt.setString(1, userid),
+                rs -> rs.getInt("moseq")
+        ).get(0);
     }
 
     public void insertOrderDetail(CartVO cvo, int oseq) {
-        con = Db.getConnection();
-        String sql = "insert into order_detail( oseq, pseq, quantity ) values(?,?,?)";
-        try {
-            pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, oseq);
-            pstmt.setInt(2, cvo.getPseq());
-            pstmt.setInt(3, cvo.getQuantity());
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Db.close(con, pstmt, rs);
-        }
+        executeUpdate("INSERT INTO order_detail( oseq, pseq, quantity ) VALUES(?, ?, ?)",
+                pstmt -> {
+                    pstmt.setInt(1, oseq);
+                    pstmt.setInt(2, cvo.getPseq());
+                    pstmt.setInt(3, cvo.getQuantity());
+                }
+        );
     }
 
-    public ArrayList<OrderVO> selectOrderByOseq(int oseq) {
-        ArrayList<OrderVO> list = new ArrayList<OrderVO>();
-        con = Db.getConnection();
-        String sql = "select * from order_view where oseq=?";
-        try {
-            pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, oseq);
-            rs = pstmt.executeQuery();
-            while (rs.next()) {
-                OrderVO ovo = new OrderVO();
-                ovo.setOdseq(rs.getInt("odseq"));
-                ovo.setOseq(rs.getInt("oseq"));
-                ovo.setUserid(rs.getString("userid"));
-                ovo.setIndate(rs.getTimestamp("indate"));
-                ovo.setMname(rs.getString("mname"));
-                ovo.setZip_num(rs.getString("zip_num"));
-                ovo.setAddress1(rs.getString("address1"));
-                ovo.setAddress2(rs.getString("address2"));
-                ovo.setPhone(rs.getString("phone"));
-                ovo.setPname(rs.getString("pname"));
-                ovo.setPrice2(rs.getInt("price2"));
-                ovo.setPseq(rs.getInt("pseq"));
-                ovo.setQuantity(rs.getInt("quantity"));
-                ovo.setResult(rs.getString("result"));
-                list.add(ovo);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Db.close(con, pstmt, rs);
-        }
-        return list;
+    public List<OrderVO> selectOrderByOseq(int oseq) {
+        return executeSelect("SELECT * FROM order_view WHERE oseq = ?",
+                pstmt -> pstmt.setInt(1, oseq),
+                rs -> {
+                    OrderVO ovo = new OrderVO();
+                    ovo.setOdseq(rs.getInt("odseq"));
+                    ovo.setOseq(rs.getInt("oseq"));
+                    ovo.setUserid(rs.getString("userid"));
+                    ovo.setIndate(rs.getTimestamp("indate"));
+                    ovo.setMname(rs.getString("mname"));
+                    ovo.setZip_num(rs.getString("zip_num"));
+                    ovo.setAddress1(rs.getString("address1"));
+                    ovo.setAddress2(rs.getString("address2"));
+                    ovo.setPhone(rs.getString("phone"));
+                    ovo.setPname(rs.getString("pname"));
+                    ovo.setPrice2(rs.getInt("price2"));
+                    ovo.setPseq(rs.getInt("pseq"));
+                    ovo.setQuantity(rs.getInt("quantity"));
+                    ovo.setResult(rs.getString("result"));
+                    return ovo;
+                }
+        );
     }
 
     public void insertOrderDetail(int pseq, int quantity, int oseq) {
-        con = Db.getConnection();
-        String sql = "insert into order_detail( oseq, pseq, quantity ) values(?,?,?)";
-        try {
-            pstmt = con.prepareStatement(sql);
-            pstmt.setInt(1, oseq);
-            pstmt.setInt(2, pseq);
-            pstmt.setInt(3, quantity);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            Db.close(con, pstmt, rs);
-        }
+        executeUpdate("INSERT INTO order_detail( oseq, pseq, quantity ) VALUES(?, ?, ?)",
+                pstmt -> {
+                    pstmt.setInt(1, oseq);
+                    pstmt.setInt(2, pseq);
+                    pstmt.setInt(3, quantity);
+                }
+        );
     }
 
 }
