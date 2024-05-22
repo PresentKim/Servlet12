@@ -1,8 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <meta charset="UTF-8">
 
 <div class="sub_img">
-    <img src="images/mypage/sub_img.jpg"/>
+    <img src="images/mypage/sub_img.jpg" alt="sub_img"/>
 </div>
 
 <div class="sub_page">

@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="../header.jsp" %>
+<%--@elvariable id="message" type="java.lang.String"--%>
 
 <section>
     <%@ include file="sub_image_menu.jsp" %>

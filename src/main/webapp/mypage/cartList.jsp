@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="../header.jsp" %>
+<%--@elvariable id="cartList" type="java.util.List<kim.present.kdt.shoesshop.dto.CartVO>"--%>
+<%--@elvariable id="totalPrice" type="int"--%>
 
 <section>
     <%@ include file="sub_image_menu.jsp" %>
@@ -30,7 +32,7 @@
                                     <fmt:formatDate value="${cartVO.indate}" type="date"/>
                                 </div>
                                 <div class="col">
-                                    <input type="checkbox" name="cseq" value="${cartVO.cseq}"/>
+                                    <label><input type="checkbox" name="cseq" value="${cartVO.cseq}"/></label>
                                 </div>
                             </div>
                         </c:forEach>
@@ -54,8 +56,8 @@
                 </c:if>
             </div>
         </form>
-
     </article>
+    </div>
 
 </section>
 

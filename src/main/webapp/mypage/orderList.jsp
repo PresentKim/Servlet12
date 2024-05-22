@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="../header.jsp" %>
+<%--@elvariable id="orderList" type="java.util.List<kim.present.kdt.shoesshop.dto.OrderVO>"--%>
+<%--@elvariable id="totalPrice" type="int"--%>
 
 <section>
 
@@ -50,7 +52,7 @@
             </c:choose>
         </form>
     </article>
-
+    </div>
 </section>
 
 

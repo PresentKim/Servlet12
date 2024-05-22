@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%--@elvariable id="addressList" type="java.util.List<kim.present.kdt.shoesshop.dto.AddressVO>"--%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,9 +17,9 @@
         <input type="submit" value="찾기" class="submit">
     </form>
 
-    <table id="zipcode" border="1">
+    <table id="zipcode" style="border: 1px">
         <tr>
-            <th width="100">우편번호</th>
+            <th style="width: 100px">우편번호</th>
             <th>주소</th>
         </tr>
         <c:forEach items="${addressList}" var="add">

@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="header.jsp" %>
+<%--@elvariable id="newList" type="java.util.List<kim.present.kdt.shoesshop.dto.ProductVO>"--%>
+<%--@elvariable id="bestList" type="java.util.List<kim.present.kdt.shoesshop.dto.ProductVO>"--%>
 
 <!-- main.jsp 의 내용 -->
 <div id="main_img">
@@ -18,18 +20,17 @@
                 <c:when test="${status.index==2}">
                     <div class="left">
                 </c:when>
-                <c:otherwise></c:otherwise>
+                <c:otherwise/>
             </c:choose>
             <div id="item">
                 <div>
                     <a href="shop.do?command=productDetail&pseq=${productVO.pseq}">
-                        <img src="product_images/${productVO.image}"/>
+                        <img src="product_images/${productVO.image}" alt="product images"/>
                     </a>
                 </div>
                 <div>
                     <a href="shop.do?command=productDetail&pseq=${productVO.pseq}">
-                            ${productVO.name} -
-                        <fmt:formatNumber value="${productVO.price2}" type="currency"/>
+                            ${productVO.name} -<fmt:formatNumber value="${productVO.price2}" type="currency"/>
                     </a>
                 </div>
             </div>
@@ -40,7 +41,7 @@
                 <c:when test="${status.index==3}">
                     </div>
                 </c:when>
-                <c:otherwise></c:otherwise>
+                <c:otherwise/>
             </c:choose>
         </c:forEach>
     </div>
@@ -58,18 +59,17 @@
                 <c:when test="${status.index==2}">
                     <div class="left">
                 </c:when>
-                <c:otherwise></c:otherwise>
+                <c:otherwise/>
             </c:choose>
             <div id="item">
                 <div>
                     <a href="shop.do?command=productDetail&pseq=${productVO.pseq}">
-                        <img src="product_images/${productVO.image}"/>
+                        <img src="product_images/${productVO.image}" alt="product images"/>
                     </a>
                 </div>
                 <div>
                     <a href="shop.do?command=productDetail&pseq=${productVO.pseq}">
-                            ${productVO.name} -
-                        <fmt:formatNumber value="${productVO.price2}" type="currency"/>
+                            ${productVO.name} - <fmt:formatNumber value="${productVO.price2}" type="currency"/>
                     </a>
                 </div>
             </div>
@@ -80,7 +80,7 @@
                 <c:when test="${status.index==3}">
                     </div>
                 </c:when>
-                <c:otherwise></c:otherwise>
+                <c:otherwise/>
             </c:choose>
         </c:forEach>
     </div>

@@ -1,23 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ include file="../header.jsp" %>
+<%--@elvariable id="productVO" type="kim.present.kdt.shoesshop.dto.ProductVO"--%>
 
 <section>
 
-    <div class="sub_img"><img src="images/product/sub_img.jpg"/></div>
+    <div class="sub_img"><img src="images/product/sub_img.jpg" alt="sub_img"/></div>
 
     <div class="sub_page">
         <article style="display:flex;flex-direction:column; align-items:center">
-            <h1 sytle="margin-left:20px">${productVO.name}</h1>
+            <h1 style="margin-left:20px">${productVO.name}</h1>
 
             <form method="post" name="formm"
                   style="display:flex;flex-direction:column; align-content:center;border:1px solid blue;">
                 <div id="itemdetail">
                     <div class="itemdetail-img-title">
-                        <div><img src="product_images/${productVO.savefilename}"/></div>
+                        <div><img src="product_images/${productVO.savefilename}" alt="product_image"/></div>
                         <div>
-                            <label> 가 격 : </label>${productVO.price2} 원 <br/>
-                            <label> 수 량 : </label>
-                            <input type="text" name="quantity" size="2" value="1">
+                            <label> 가 격 : ${productVO.price2} 원 </label>
+                            <br/>
+                            <label>
+                                수 량 : <input type="text" name="quantity" size="2" value="1">
+                            </label>
                             <input type="hidden" name="pseq" value="${productVO.pseq}">
                         </div>
                     </div>

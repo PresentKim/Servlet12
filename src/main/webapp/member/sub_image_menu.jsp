@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+ <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%--@elvariable id="loginUser" type="kim.present.kdt.shoesshop.dto.MemberVO"--%>
 
 <div class="sub_img">
     <img src="images/member/sub_img.jpg" alt="sub_img"/>
