@@ -32,8 +32,8 @@ public class CartInsertAction implements Action {
             cvo.setQuantity(quantity);
 
             cdao.insertCart(cvo);
+            response.sendRedirect("shop.do?command=cartList");
         }
-        response.sendRedirect("shop.do?command=cartList");
     }
 
 }
