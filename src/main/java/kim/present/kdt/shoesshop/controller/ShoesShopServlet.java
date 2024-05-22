@@ -14,30 +14,19 @@ import java.io.IOException;
 public class ShoesShopServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ShoesShopServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
-
-    /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-     */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 
+        System.out.println(request.getMethod() + " : " + request.getRequestURI() + "?" + request.getQueryString());
+
         String command = request.getParameter("command");
-        System.out.println("command : " + command);
         if (command == null) {
             System.out.println("1. command 값 오류");
             return;
         }
 
         Action ac = ActionFactory.getInstance().getAction(command);
-
         if (ac == null) {
             System.out.println("2. Action 조립 오류");
             return;
@@ -46,9 +35,6 @@ public class ShoesShopServlet extends HttpServlet {
         ac.execute(request, response);
     }
 
-    /**
-     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         doGet(request, response);
     }
