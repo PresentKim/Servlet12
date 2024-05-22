@@ -1,13 +1,12 @@
 package kim.present.kdt.shoesshop.dao;
 
 import kim.present.kdt.shoesshop.dto.CartVO;
-import kim.present.kdt.shoesshop.util.Db;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import static kim.present.kdt.shoesshop.util.Db.executeSelect;
+import static kim.present.kdt.shoesshop.util.Db.*;
 
 public class CartDao {
 
@@ -21,7 +20,7 @@ public class CartDao {
     }
 
     public void insertCart(CartVO cvo) {
-        Db.executeUpdate("INSERT INTO cart (userid, pseq, quantity) VALUES (? , ? , ?)", pstmt -> {
+        executeUpdate("INSERT INTO cart (userid, pseq, quantity) VALUES (? , ? , ?)", pstmt -> {
             pstmt.setString(1, cvo.getUserid());
             pstmt.setInt(2, cvo.getPseq());
             pstmt.setInt(3, cvo.getQuantity());
@@ -36,14 +35,14 @@ public class CartDao {
     }
 
     public void deleteCart(int cseq) {
-        Db.executeUpdate("DELETE FROM cart WHERE cseq = ?", pstmt -> pstmt.setInt(1, cseq));
+        executeUpdate("DELETE FROM cart WHERE cseq = ?", pstmt -> pstmt.setInt(1, cseq));
     }
 
     public CartVO getCart(String cseq) {
-        return executeSelect("SELECT * FROM cart_view WHERE cseq = ?",
+        return executeSelectOne("SELECT * FROM cart_view WHERE cseq = ?",
                 pstmt -> pstmt.setInt(1, Integer.parseInt(cseq)),
                 CartDao::extractCartVO
-        ).get(0);
+        );
     }
 
     private static CartVO extractCartVO(ResultSet rs) throws SQLException {

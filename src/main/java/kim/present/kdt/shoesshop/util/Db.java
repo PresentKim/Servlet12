@@ -54,6 +54,11 @@ public class Db {
         return result;
     }
 
+    public static <T> List<T> executeSelect(String query, ResultSetExtractor<T> extractor) {
+        return executeSelect(query, pstmt -> {
+        }, extractor);
+    }
+
     public static <T> List<T> executeSelect(String query, StatementPreparer preparer, ResultSetExtractor<T> extractor) {
         List<T> list = new ArrayList<>();
         try {
@@ -72,6 +77,26 @@ public class Db {
         }
 
         return list;
+    }
+
+    public static <T> T executeSelectOne(String query, StatementPreparer preparer, ResultSetExtractor<T> extractor) {
+        T result = null;
+        try {
+            Connection con = getConnection();
+            PreparedStatement pstmt = con.prepareStatement(query);
+
+            preparer.prepare(pstmt);
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                result = extractor.extract(rs);
+            }
+
+            close(con, pstmt, rs);
+        } catch (SQLException e) {
+            Logger.getLogger("DB").throwing("Db", "execute", e);
+        }
+
+        return result;
     }
 
     @FunctionalInterface

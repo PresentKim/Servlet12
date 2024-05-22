@@ -17,8 +17,11 @@ public class IdcheckFormAction implements Action {
         MemberDao mdao = MemberDao.getInstance();
         MemberVO mvo = mdao.getMember(userid);
 
-        if (mvo == null) request.setAttribute("result", -1); //사용가능
-        else request.setAttribute("result", 1);  //사용중
+        if (mvo == null) {
+            request.setAttribute("result", -1); // 사용가능
+        } else {
+            request.setAttribute("result", 1);  // 사용중
+        }
 
         request.setAttribute("userid", userid);
 

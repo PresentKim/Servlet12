@@ -17,20 +17,18 @@ public class LoginAction implements Action {
         String userid = request.getParameter("userid");
         String pwd = request.getParameter("pwd");
 
-        MemberDao mdao = MemberDao.getInstance();
-        MemberVO mvo = mdao.getMember(userid);
+        MemberVO mvo = MemberDao.getInstance().getMember(userid);
 
         String url = "member/loginForm.jsp";
-        if (mvo == null)
+        if (mvo == null) {
             request.setAttribute("message", "아이디가 없습니다");
-        else if (!mvo.getPwd().equals(pwd))
+        } else if (!mvo.getPwd().equals(pwd)) {
             request.setAttribute("message", "패스워드가 틀립니다");
-        else if (mvo.getPwd().equals(pwd)) {
+        } else {
             url = "shop.do?command=index";
             HttpSession session = request.getSession();
             session.setAttribute("loginUser", mvo);
-        } else
-            request.setAttribute("message", "관리자에게 문의하세요");
+        }
 
         request.getRequestDispatcher(url).forward(request, response);
     }

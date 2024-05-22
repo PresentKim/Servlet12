@@ -1,12 +1,14 @@
 package kim.present.kdt.shoesshop.controller;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kim.present.kdt.shoesshop.controller.action.Action;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 /**
  * Servlet implementation class ShoesShopServlet
@@ -18,17 +20,19 @@ public class ShoesShopServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         response.setCharacterEncoding("UTF-8");
 
-        System.out.println(request.getMethod() + " : " + request.getRequestURI() + "?" + request.getQueryString());
+
+        Logger logger = Logger.getLogger("Tomcat/Servlet");
+        logger.info(request.getMethod() + " : " + request.getRequestURI() + "?" + request.getQueryString());
 
         String command = request.getParameter("command");
         if (command == null) {
-            System.out.println("1. command 값 오류");
+            logger.warning("Command not found");
             return;
         }
 
         Action ac = ActionFactory.getInstance().getAction(command);
         if (ac == null) {
-            System.out.println("2. Action 조립 오류");
+            logger.warning("Action not found : " + command);
             return;
         }
 

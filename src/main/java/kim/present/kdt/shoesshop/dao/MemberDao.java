@@ -7,8 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-import static kim.present.kdt.shoesshop.util.Db.executeSelect;
-import static kim.present.kdt.shoesshop.util.Db.executeUpdate;
+import static kim.present.kdt.shoesshop.util.Db.*;
 
 public class MemberDao {
 
@@ -22,7 +21,7 @@ public class MemberDao {
     }
 
     public MemberVO getMember(String userid) {
-        return executeSelect("SELECT * FROM member WHERE userid = ?",
+        return executeSelectOne("SELECT * FROM member WHERE userid = ?",
                 pstmt -> pstmt.setString(1, userid),
                 rs -> {
                     MemberVO mvo = new MemberVO();
@@ -38,7 +37,7 @@ public class MemberDao {
                     mvo.setIndate(rs.getTimestamp("indate"));
                     return mvo;
                 }
-        ).get(0);
+        );
     }
 
     public List<AddressVO> selectAddressByDong(String dong) {

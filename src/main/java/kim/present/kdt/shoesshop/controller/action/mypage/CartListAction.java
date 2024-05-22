@@ -22,8 +22,7 @@ public class CartListAction implements Action {
         if (mvo == null) {
             response.sendRedirect("shop.do?command=loginForm");
         } else {
-            CartDao cdao = CartDao.getInstance();
-            List<CartVO> list = cdao.selectCart(mvo.getUserid());
+            List<CartVO> list = CartDao.getInstance().selectCart(mvo.getUserid());
 
             int totalPrice = 0;
             for (CartVO cvo : list) {

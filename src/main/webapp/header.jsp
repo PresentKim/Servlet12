@@ -24,7 +24,8 @@
     <header>
         <nav id="top_menu">
             <div id="logo">
-                <a href="shop.do?command=index"><img alt="logo" src="images/logo.png" width="180px" height="100px"></a></div>
+                <a href="shop.do?command=index"><img alt="logo" src="images/logo.png" width="180px" height="100px"></a>
+            </div>
             <div class="gnb">
                 <c:choose>
                     <c:when test="${empty loginUser}">

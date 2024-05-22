@@ -5,8 +5,7 @@ import kim.present.kdt.shoesshop.dto.OrderVO;
 
 import java.util.List;
 
-import static kim.present.kdt.shoesshop.util.Db.executeSelect;
-import static kim.present.kdt.shoesshop.util.Db.executeUpdate;
+import static kim.present.kdt.shoesshop.util.Db.*;
 
 public class OrderDao {
 
@@ -24,10 +23,10 @@ public class OrderDao {
     }
 
     public int lookupMaxOseq(String userid) {
-        return executeSelect("SELECT MAX(oseq) AS moseq FROM orders WHERE userid = ?",
+        return executeSelectOne("SELECT MAX(oseq) AS moseq FROM orders WHERE userid = ?",
                 pstmt -> pstmt.setString(1, userid),
                 rs -> rs.getInt("moseq")
-        ).get(0);
+        );
     }
 
     public void insertOrderDetail(CartVO cvo, int oseq) {

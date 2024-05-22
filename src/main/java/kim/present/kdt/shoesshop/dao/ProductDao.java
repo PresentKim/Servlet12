@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static kim.present.kdt.shoesshop.util.Db.executeSelect;
+import static kim.present.kdt.shoesshop.util.Db.executeSelectOne;
 
 public class ProductDao {
 
@@ -20,19 +21,11 @@ public class ProductDao {
     }
 
     public List<ProductVO> selectBestProduct() {
-        return executeSelect("SELECT * FROM best_pro_view",
-                pstmt -> {
-                },
-                ProductDao::extractProductVO
-        );
+        return executeSelect("SELECT * FROM best_pro_view", ProductDao::extractProductVO);
     }
 
     public List<ProductVO> selectNewProduct() {
-        return executeSelect("SELECT * FROM new_pro_view",
-                pstmt -> {
-                },
-                ProductDao::extractProductVO
-        );
+        return executeSelect("SELECT * FROM new_pro_view", ProductDao::extractProductVO);
     }
 
     public List<ProductVO> selectKindProduct(String kind) {
@@ -43,10 +36,10 @@ public class ProductDao {
     }
 
     public ProductVO getProduct(int pseq) {
-        return executeSelect("SELECT * FROM product WHERE pseq = ?",
+        return executeSelectOne("SELECT * FROM product WHERE pseq = ?",
                 pstmt -> pstmt.setInt(1, pseq),
                 ProductDao::extractProductVO
-        ).get(0);
+        );
     }
 
     private static ProductVO extractProductVO(ResultSet rs) throws SQLException {
