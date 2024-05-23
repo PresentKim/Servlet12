@@ -3,7 +3,7 @@ package kim.present.kdt.shoesshop.controller.action.mypage;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import kim.present.kdt.shoesshop.controller.action.Action;
+import kim.present.kdt.shoesshop.controller.action.MemberAction;
 import kim.present.kdt.shoesshop.dao.CartDao;
 import kim.present.kdt.shoesshop.dao.OrderDao;
 import kim.present.kdt.shoesshop.dto.CartVO;
@@ -13,16 +13,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderInsertAction implements Action {
+public class OrderInsertAction extends MemberAction {
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        MemberVO mvo = (MemberVO) request.getSession().getAttribute("loginUser");
-        if (mvo == null) {
-            response.sendRedirect("shop.do?command=loginForm");
-            return;
-        }
-
+    public void execute(HttpServletRequest request, HttpServletResponse response, MemberVO mvo) throws ServletException, IOException {
         CartDao cdao = CartDao.getInstance();
         String[] cseqs = request.getParameterValues("cseq");
         List<CartVO> finalList = new ArrayList<>();
