@@ -97,6 +97,15 @@ CREATE TABLE IF NOT EXISTS qna
 );
 
 
+CREATE TABLE IF NOT EXISTS admin
+(
+    adminid VARCHAR(30) PRIMARY KEY NOT NULL COMMENT '관리자 아이디',
+    pwd     VARCHAR(30)             NOT NULL COMMENT '비밀번호',
+    name    VARCHAR(30)             NOT NULL COMMENT '이름',
+    phone   VARCHAR(30)             NOT NULL COMMENT '전화번호'
+);
+
+
 /*
  *Add Foreign Key
  */

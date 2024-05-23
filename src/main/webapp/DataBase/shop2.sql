@@ -49,6 +49,11 @@ VALUES ('배송관련 문의입니다', '현재 배송상태와 예상 배송일
        ('배송이 많이 지연되고 있습니다', '언제 받을 수 있나요', 'two'),
        ('불량품 교환 문의', '교환 또는 환불 등의 안내가 필요합니다. 유선안내부탁드려요', 'one');
 
+-- 관리자 데이터 추가
+INSERT INTO admin (adminid, pwd, name, phone)
+VALUES ('admin', '1234', '관리자', '010-7777-7777'),
+       ('scott', 'tiger', '부관리자', '010-1234-5678');
+
 -- cart 안의 pseq로 상품이름과  그리고 userid로 사용자 이름을 함꼐 조회하는  view를 생성합니다
 CREATE OR REPLACE view cart_view AS
 SELECT c.cseq,
