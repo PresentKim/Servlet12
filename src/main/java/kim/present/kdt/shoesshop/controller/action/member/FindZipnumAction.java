@@ -4,7 +4,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kim.present.kdt.shoesshop.controller.action.Action;
-import kim.present.kdt.shoesshop.dao.MemberDao;
+import kim.present.kdt.shoesshop.dao.AddressDao;
 
 import java.io.IOException;
 
@@ -14,7 +14,7 @@ public class FindZipnumAction implements Action {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String dong = request.getParameter("dong");
         if (dong != null && !dong.isEmpty()) {
-            request.setAttribute("addressList", MemberDao.getInstance().selectAddressByDong(dong));
+            request.setAttribute("addressList", AddressDao.getInstance().selectAddressByDong(dong));
         }
         request.getRequestDispatcher("member/findZipNum.jsp").forward(request, response);
     }
