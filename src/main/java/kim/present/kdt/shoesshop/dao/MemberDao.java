@@ -1,13 +1,9 @@
 package kim.present.kdt.shoesshop.dao;
 
-import kim.present.kdt.shoesshop.dto.AddressVO;
 import kim.present.kdt.shoesshop.dto.MemberVO;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.List;
-
-import static kim.present.kdt.shoesshop.util.Db.*;
+import static kim.present.kdt.shoesshop.util.Db.executeSelectOne;
+import static kim.present.kdt.shoesshop.util.Db.executeUpdate;
 
 public class MemberDao {
 
@@ -40,13 +36,6 @@ public class MemberDao {
         );
     }
 
-    public List<AddressVO> selectAddressByDong(String dong) {
-        return executeSelect("SELECT * FROM address WHERE dong LIKE CONCAT('%', ?, '%')",
-                pstmt -> pstmt.setString(1, dong),
-                MemberDao::extractAddressVO
-        );
-    }
-
     public int insertMember(MemberVO mvo) {
         return executeUpdate("INSERT INTO member (userid, pwd, name, zip_num, address1, address2, email, phone)"
                         + " VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )",
@@ -62,18 +51,6 @@ public class MemberDao {
                 }
         );
     }
-
-    private static AddressVO extractAddressVO(ResultSet rs) throws SQLException {
-        AddressVO avo = new AddressVO();
-        avo.setZip_num(rs.getString("zip_num"));
-        avo.setSido(rs.getString("sido"));
-        avo.setGugun(rs.getString("gugun"));
-        avo.setDong(rs.getString("dong"));
-        avo.setZip_code(rs.getString("zip_code"));
-        avo.setBunji(rs.getString("bunji"));
-        return avo;
-    }
-
 
     public void updateMember(MemberVO mvo) {
         executeUpdate("UPDATE member SET pwd = ?, name = ?, zip_num = ?, address1 = ?, address2 = ?, email = ?, phone = ? WHERE userid = ?",
