@@ -13,7 +13,7 @@ public class CategoryAction implements Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String kind = request.getParameter("kind");
-        String[] kindList = {"", "Heels", "Boots", "Sandals", "Snickers", "Slippers"};
+        String[] kindList = {"", "Heels", "Boots", "Sandals", "Sneakers", "Slippers"};
 
         request.setAttribute("kindProduct", ProductDao.getInstance().selectKindProduct(kind));
         request.setAttribute("kind", kindList[Integer.parseInt(kind)]);

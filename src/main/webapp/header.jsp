@@ -54,7 +54,7 @@
             <a href="shop.do?command=category&kind=1">Heels</a>
             <a href="shop.do?command=category&kind=2">Boots</a>
             <a href="shop.do?command=category&kind=3">Sandals</a>
-            <a href="shop.do?command=category&kind=4">Sneakers</a>
+            <a href="shop.do?command=category&kind=4">Snickers</a>
             <a href="shop.do?command=category&kind=5">Slippers</a>
 
         </nav>

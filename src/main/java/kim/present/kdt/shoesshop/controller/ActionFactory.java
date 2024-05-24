@@ -2,6 +2,7 @@ package kim.present.kdt.shoesshop.controller;
 
 import kim.present.kdt.shoesshop.controller.action.Action;
 import kim.present.kdt.shoesshop.controller.action.IndexAction;
+import kim.present.kdt.shoesshop.controller.action.admin.*;
 import kim.present.kdt.shoesshop.controller.action.customer.QnaListAction;
 import kim.present.kdt.shoesshop.controller.action.customer.QnaViewAction;
 import kim.present.kdt.shoesshop.controller.action.customer.WriteQnaAction;
@@ -115,6 +116,64 @@ public class ActionFactory {
                 break;
             case "writeQna":
                 ac = new WriteQnaAction();
+                break;
+
+            // admin
+            case "admin":
+                ac = new AdminAction();
+                break;
+            case "adminLogin":
+                ac = new AdminLoginAction();
+                break;
+            case "adminLogout":
+                ac = new AdminLogoutAction();
+                break;
+            case "adminProductList":
+                ac = new AdminProductListAction();
+                break;
+            case "adminProductWriteForm":
+                ac = new AdminProductWriteFormAction();
+                break;
+            case "adminProductWrite":
+                ac = new AdminProductWriteAction();
+                break;
+            case "adminProductDetail":
+                ac = new AdminProductDetailAction();
+                break;
+            case "adminProductUpdateForm":
+                ac = new AdminProductUpdateFormAction();
+                break;
+            case "adminProductUpdate":
+                ac = new AdminProductUpdateAction();
+                break;
+            case "adminProductDelete":
+                ac = new AdminProductDeleteAction();
+                break;
+
+            case "adminOrderList":
+                ac = new AdminOrderListAction();
+                break;
+            case "adminOrderSave":
+                ac = new AdminOrderSaveAction();
+                break;
+            case "adminMemberList":
+                ac = new AdminMemberListAction();
+                break;
+            case "memberChangeN":
+                ac = new MemberChangeNAction();
+                break;
+            case "memberChangeY":
+                ac = new MemberChangeYAction();
+                break;
+
+            case "adminQnaList":
+                ac = new AdminQnaListAction();
+                break;
+            case "adminQnaDetail":
+                ac = new AdminQnaDetailAction();
+                break;
+            case "adminQnaRepSave":
+                ac = new AdminQnaRepSaveAction();
                 break;
         }
 
